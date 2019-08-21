@@ -1,5 +1,6 @@
 import requests
 from lxml import etree
+from utils.redis_utils import sadd_proxy
 import time
 
 class Kuaidaili():
@@ -40,13 +41,11 @@ class Kuaidaili():
                     TYPE = proxy_type.xpath('string(./td[4]/text())')
                     if INCOGNITO == "高匿名":
                         if TYPE == "HTTP":
-                            pass
+                            proxy = "http://{}:{}".format(IP, PORT)
+                            sadd_proxy(proxy, "Unprocessed")
                         elif TYPE == "HTTPS":
-                            pass
-                        print(IP, PORT, TYPE)
-
-
-
+                            proxy = "https://{}:{}".format(IP, PORT)
+                            sadd_proxy(proxy, "Unprocessed")
 
 if __name__ == "__main__":
     kdl = Kuaidaili()

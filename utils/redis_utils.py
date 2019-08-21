@@ -27,7 +27,7 @@ def sadd_proxy(proxy, process="Unprocessed"):
         else:
             if process:
                 redis_set_key = re.sub(r"[^a-zA-Z0-9]", "", process)
-                conn_redis.sadd(redis_set_key,proxy)
+                conn_redis.sadd(redis_set_key, proxy)
     except Exception as e:
         logger().logger.error("[sadd error]   \n{}".format(e))
 
