@@ -62,4 +62,24 @@ def del_proxy(proxy: str, process="Unprocessed"):
         logger().logger.error("[del_proxy error]   \n{}".format(e))
 
 
+def quantity(host: str):
+    """Calculate the total number of domain agents"""
+    return conn_redis.scard(host)
+
+
+def random_proxy(amount: int, types="http", host=None):
+    """Obtain random Number proxy"""
+    types = types.lower()
+    proxy_type_dict = {"http": configs.HTTP_PROCESSED, "https": configs.HTTPS_PROCESSED}
+    types = proxy_type_dict.get(types)
+    _count_key = (host or types)
+    _count = quantity(_count_key)
+    if amount > _count:
+        amount = _count
+    if host:
+        proxy_list = conn_redis.srandmember(host, amount)
+    else:
+        proxy_list = conn_redis.srandmember(types, amount)
+    return proxy_list
+
 
