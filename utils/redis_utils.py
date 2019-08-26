@@ -6,7 +6,7 @@ from utils.log_pag import logger
 conn_redis = redis.Redis(host=configs.REDOSHOST, port=configs.REDOSPORT, db=configs.DB)
 
 
-def sadd_proxy(proxy, process="Unprocessed"):
+def sadd_proxy(proxy: str, process="Unprocessed"):
     """redis insert set"""
     try:
         if process == "Unprocessed":

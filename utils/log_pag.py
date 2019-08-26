@@ -24,10 +24,10 @@ class Logger(object):
         self.logger.addHandler(sh)
         self.logger.addHandler(th)
 
+
 def logger():
     page = Logger()
     return page
-
 
 
 if __name__ == '__main__':
