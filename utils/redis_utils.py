@@ -26,8 +26,8 @@ def sadd_proxy(proxy: str, process="Unprocessed"):
                 conn_redis.sadd(configs.HTTP_SCRAPPED, proxy)
         else:
             if process:
-                redis_set_key = re.sub(r"[^a-zA-Z0-9]", "", process)
-                conn_redis.sadd(redis_set_key, proxy)
+                # redis_set_key = re.sub(r"[^a-zA-Z0-9]", "", process)
+                conn_redis.sadd(process, proxy)
     except Exception as e:
         logger().logger.error("[sadd error]   \n{}".format(e))
 
@@ -81,5 +81,27 @@ def random_proxy(amount: int, types="http", host=None):
     else:
         proxy_list = conn_redis.srandmember(types, amount)
     return proxy_list
+
+def add_host(host:str, url:str, amount:int, timeout:int, type:str):
+    """
+    1、入库host配置表
+    :param host:
+    :param url:
+    :param amount:
+    :param timeout:
+    :param type:
+    :return:
+    """
+    data = "{}|{}|{}|{}".format(url, type, amount, timeout)
+    conn_redis.hset(configs.HOST_CONFIG, host, data)
+
+
+def read_host():
+    b_host_list = conn_redis.hkeys(configs.HOST_CONFIG)
+    host_list = [host.decode("utf-8") for host in b_host_list]
+    return {host: conn_redis.hget(configs.HOST_CONFIG, host) for host in host_list}
+
+
+
 
 

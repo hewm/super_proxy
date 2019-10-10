@@ -3,7 +3,7 @@ url = www.baidu.com
 验证模块
 """
 import grequests
-from utils.redis_utils import smembers_proxy,sadd_proxy,del_proxy
+from utils.redis_utils import smembers_proxy, sadd_proxy, del_proxy
 from utils.proxy_main import Main_proxy
 from utils.configs import HTTP_UNPROCESSED, HTTPS_UNPROCESSED, DEFAULT_URL, SIZE
 from utils.log_pag import logger
